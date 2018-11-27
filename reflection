@@ -1,0 +1,12 @@
+	I started this project about a month into my web development journey. I had been following a course that skimmed through numerous topics ranging 
+	from HTML to CSS and Bootstrap to JS, ES6 and it was beginning to touch on React. I felt somewhat lost during the react section as I felt like my 
+	knowledge base of JS fundamentals weren't solid enough to be moving on to React. 
+
+	One of the members of the gym I train at who happens to be a product manager at Google and is a very experienced coder advised me to jump into
+	a project head first to solidfy the fundamentals of JS. At the gym I manage, we use a membership webapp that tracks prospects who fill out a webform with their information, stores the information in a database and allows us to access the data through their website in order to reach out to 
+	the prospective members. One of my tasks at this gym is to call every single person who gives us their contact info and get them into the gym to see
+	how they like it. The membership webapp we use, while good for automation and emails, is absolutely terrible for my purposes as we get upwards of 200 prospects a month, making it very hard to track who has been called, how many times I've attempted to contact through calling, if they wanted a call back, etc. I set out on this project to supplement my work at the gym, I wanted to develop a web app that would parse the data of our prospects and present it to me in a neat fashion where I could add my own notes to every prospect and track various information about each prospect.
+
+	The first major hurdle was that the web app that we use, Rainmaker Membership, does not have an API that would make it easy to extract the data I needed. Instead, I wrote a simple script that would scrape the prospect contact pages and store the names, numbers and opt in dates of each prospect. By creating this part of the webapp, I learned a lot about manipulating strings, creating and manipulating arrays, using AJAX to make HTTP requests and of course there was a ton of debugging to be had. 
+
+	
