@@ -1,0 +1,17 @@
+.root {
+  background-color: rgb(241, 241, 241);
+  font-family: "dosis";
+  font-size: 1rem;
+  border-color: black;
+}
+
+.hidden{
+    display=none;
+}
+
+.removeButton{
+    width:30px;
+    align-content:center;
+    border-radius:50%, 50%;
+    float:left;
+}

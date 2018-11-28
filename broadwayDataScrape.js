@@ -60,7 +60,9 @@ const dataScrape = function() {
         const optInString = siteData.slice(optInStringStart, optInStringEnd);
         const optInStart = optInString.indexOf(">") + 1;
         const optInEnd = optInString.indexOf("<");
-        optInDate.push(optInString.slice(optInStart, optInEnd));
+        let optIn = optInString.slice(optInStart, optInEnd);
+        optIn = optIn.replace("/", "");
+        optInDate.push(optIn);
 
         if (number.length === webLeads.length) {
           let prospects = name.map(function(x, i) {
@@ -71,6 +73,9 @@ const dataScrape = function() {
       }
     };
   });
+  copy(prospectInfo);
 };
 // this script rips the names, numbers and opt in dates of all the prospects on the rainmaker home page and pushes them into
 // the blank arrays previously created. Once all the links have been parsed, the 3 arrays are merged.
+
+dataScrape();
