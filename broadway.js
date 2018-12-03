@@ -1,11 +1,23 @@
 let prospects = [];
+let time = [];
+const dateFormula = function(y) {
+  let month = y.slice(0, 2);
+  let day = Number(y.slice(2, 4));
+  let year = y.slice(5, 9);
+  month = month - 1;
+
+  date = new Date(year, month, day, 0, 0, 0);
+  return date;
+};
+
 const populateProspects = function() {
   let i;
   for (i = 0; i < prospectList.length; i++) {
     let prospect = {
       name: prospectList[i][0],
       number: prospectList[i][1],
-      date: prospectList[i][2].replace("/", "")
+      date: prospectList[i][2].replace("/", ""),
+      time: dateFormula(prospectList[i][2]).getTime()
     };
     if (prospect.number === "N/A") {
       i = i;
@@ -18,11 +30,20 @@ const populateProspects = function() {
 //and also turns the date column into a MMDDYYYY format so it can be sorted by value
 populateProspects();
 
+const prospectsCompare = function(a, b) {
+  if (a.time < b.time) return 1;
+  if (a.time > b.time) return -1;
+
+  return 0;
+};
+
+prospects.sort(prospectsCompare);
 const displayProspects = function(x) {
   let root = document.querySelector(".root");
   let newDiv = document.createElement("div");
   let prospectNumber = prospects[x].number;
   let prospectName = prospects[x].name;
+  let date = prospects.date;
   prospectNumber =
     prospectNumber.slice(0, 3) +
     "-" +
@@ -32,7 +53,6 @@ const displayProspects = function(x) {
   let text = document.createTextNode(prospectName + " " + prospectNumber);
   newDiv.appendChild(text);
   newDiv.setAttribute("Id", "prospect" + x);
-  newDiv.setAttribute("date", prospects[x].date);
   root.appendChild(newDiv);
 };
 
@@ -61,8 +81,15 @@ const addRemoval = function() {
     removeButton = document.getElementById("removeButton" + i);
     removeButton.addEventListener("click", function() {
       this.parentElement.classList.add("hidden");
-      this.parentElement.style.display = "none";
     });
   }
 };
 addRemoval();
+
+const dateFilter = function() {
+  let todaysDate = new Date();
+  todaysDate = todaysDate.toDateString();
+  let i;
+
+  console.log;
+};

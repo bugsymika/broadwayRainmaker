@@ -1,3 +1,11 @@
+.head {
+  width: 100%;
+  height: fit-content;
+  background-color: grey;
+  font-family: "dosis";
+  font-size: 2rem;
+}
+
 .root {
   background-color: rgb(241, 241, 241);
   font-family: "dosis";
@@ -5,13 +13,13 @@
   border-color: black;
 }
 
-.hidden{
-    display=none;
+.hidden {
+  display: none;
 }
 
-.removeButton{
-    width:30px;
-    align-content:center;
-    border-radius:50%, 50%;
-    float:left;
+.removeButton {
+  width: 30px;
+  align-content: center;
+  border-radius: 50%, 50%;
+  float: left;
 }

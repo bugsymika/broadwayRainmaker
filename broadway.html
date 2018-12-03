@@ -9,7 +9,20 @@
     <title>Broadway Web App</title>
   </head>
   <body>
-    <div class="root"></div>
+    <div class="head">
+      Filter By:
+      <form name="sortMenu">
+        <select name="sortMenu" id="sortMenu">
+          <option>Last Week (Default)</option>
+          <option>Last 2 Weeks</option>
+          <option>Last Month</option>
+          <option>Last 2 Months</option>
+          <option>last 3 Months</option>
+          <option>All </option>
+        </select>
+      </form>
+      <div class="root"></div>
+    </div>
     <script type="text/javascript" src="../prospects.js"></script>
     <script type="text/javascript" src="broadway.js"></script>
   </body>
