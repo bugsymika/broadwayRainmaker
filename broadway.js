@@ -87,9 +87,41 @@ const addRemoval = function() {
 addRemoval();
 
 const dateFilter = function() {
+  let filterBy = document.getElementById("sortMenu").value;
   let todaysDate = new Date();
-  todaysDate = todaysDate.toDateString();
+  todaysDate = todaysDate.getTime();
+  todaysDate = todaysDate / 1000;
   let i;
-
-  console.log;
-};
+  for (i = 0; i < prospects.length; i++) {
+    if (
+      (filterBy =
+        "Last Week (Default)" && prospects[i].time / 1000 < todaysDate - 604800)
+    ) {
+      // document.getElementById("prospect" + [i]).style.display = "none";
+      console.log(
+        prospects[i].time / 1000 < todaysDate - 604800,
+        prospects[i].name
+      );
+    } else if (
+      (filterBy =
+        "Last 2 Weeks" && prospects[i].time / 1000 < todaysDate - 604800 * 2)
+    ) {
+      // document.getElementById("prospect" + [i]).style.display = "none";
+      console.log(
+        prospects[i].time / 1000 < todaysDate - 604800,
+        prospects[i].name
+      );
+    } else if (
+      (filterBy =
+        "Last Month" && prospects[i].time / 1000 < todaysDate - 604800 * 4)
+    ) {
+      // document.getElementById("prospect" + [i]).style.display = "none";
+      console.log(
+        prospects[i].time / 1000 < todaysDate - 604800,
+        prospects[i].name
+      );
+    } else {
+      i = i;
+    }
+  } //loop
+}; //function
