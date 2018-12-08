@@ -10,16 +10,20 @@
   </head>
   <body>
     <div class="head">
-      Filter By:
-      <form name="sortMenu">
-        <select name="sortMenu" id="sortMenu">
-          <option>Last Week (Default)</option>
-          <option>Last 2 Weeks</option>
-          <option>Last Month</option>
-          <option>All </option>
-        </select>
-      </form>
-      <div class="root"></div>
+      <div class="filters">
+        Filter By:
+        <form name="sortMenu">
+          <select name="sortMenu" id="sortMenu">
+            <option>All (default)</option>
+            <option>Last Week</option>
+            <option>Last 2 Weeks</option>
+            <option>Last Month</option>
+            <option>Hidden</option>
+          </select>
+        </form>
+        <div class="searchBar"><input type="text" id="searchBar" /></div>
+        <div class="root"></div>
+      </div>
     </div>
     <script type="text/javascript" src="../prospects.js"></script>
     <script type="text/javascript" src="broadway.js"></script>

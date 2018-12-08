@@ -7,6 +7,8 @@ const dateFormula = function(y) {
   month = month - 1;
 
   date = new Date(year, month, day, 0, 0, 0);
+  date = date.getTime();
+  date = date / 1000;
   return date;
 };
 
@@ -14,10 +16,10 @@ const populateProspects = function() {
   let i;
   for (i = 0; i < prospectList.length; i++) {
     let prospect = {
-      name: prospectList[i][0],
+      name: prospectList[i][0].replace("  ", " "),
       number: prospectList[i][1],
       date: prospectList[i][2].replace("/", ""),
-      time: dateFormula(prospectList[i][2]).getTime()
+      time: dateFormula(prospectList[i][2])
     };
     if (prospect.number === "N/A") {
       i = i;
@@ -53,6 +55,7 @@ const displayProspects = function(x) {
   let text = document.createTextNode(prospectName + " " + prospectNumber);
   newDiv.appendChild(text);
   newDiv.setAttribute("Id", "prospect" + x);
+  newDiv.setAttribute("class", "prospect");
   root.appendChild(newDiv);
 };
 
@@ -63,65 +66,136 @@ const fillBody = function() {
   }
 };
 fillBody();
-const addRemoveButtons = function() {
+const addButtons = function(buttonPurpose, buttonInner) {
   let i;
   for (i = 0; i < prospects.length; i++) {
     const buttonMake = document.createElement("button");
     let prospects = document.getElementById("prospect" + [i]);
-    buttonMake.className = "removeButton";
-    buttonMake.id = "removeButton" + i;
-    buttonMake.innerText = "X";
+    buttonMake.className = buttonPurpose;
+    buttonMake.id = buttonPurpose + i;
+    buttonMake.innerText = buttonInner;
     prospects.appendChild(buttonMake);
   }
 };
-addRemoveButtons();
+addButtons("removeButton", "X");
+
+const addNotesBar = function() {
+  let i;
+  for (i = 0; i < prospects.length; i++) {
+    const noteBar = document.createElement("input");
+    let prospects = document.getElementById("prospect" + [i]);
+    noteBar.id = "prospectNote" + i;
+    noteBar.className = "noteBar";
+    prospects.appendChild(noteBar);
+  }
+};
+addNotesBar();
+addButtons("noteButton", "+");
+
 const addRemoval = function() {
   let i;
   for (i = 0; i < prospects.length; i++) {
     removeButton = document.getElementById("removeButton" + i);
     removeButton.addEventListener("click", function() {
-      this.parentElement.classList.add("hidden");
+      if (this.parentElement.classList.contains("hidden")) {
+        this.parentElement.classList.remove("hidden");
+      } else {
+        this.parentElement.classList.add("hidden");
+      }
     });
   }
 };
 addRemoval();
 
-const dateFilter = function() {
-  let filterBy = document.getElementById("sortMenu").value;
+const dateFilter = function(days) {
   let todaysDate = new Date();
   todaysDate = todaysDate.getTime();
   todaysDate = todaysDate / 1000;
   let i;
   for (i = 0; i < prospects.length; i++) {
-    if (
-      (filterBy =
-        "Last Week (Default)" && prospects[i].time / 1000 < todaysDate - 604800)
-    ) {
-      // document.getElementById("prospect" + [i]).style.display = "none";
-      console.log(
-        prospects[i].time / 1000 < todaysDate - 604800,
-        prospects[i].name
-      );
-    } else if (
-      (filterBy =
-        "Last 2 Weeks" && prospects[i].time / 1000 < todaysDate - 604800 * 2)
-    ) {
-      // document.getElementById("prospect" + [i]).style.display = "none";
-      console.log(
-        prospects[i].time / 1000 < todaysDate - 604800,
-        prospects[i].name
-      );
-    } else if (
-      (filterBy =
-        "Last Month" && prospects[i].time / 1000 < todaysDate - 604800 * 4)
-    ) {
-      // document.getElementById("prospect" + [i]).style.display = "none";
-      console.log(
-        prospects[i].time / 1000 < todaysDate - 604800,
-        prospects[i].name
-      );
-    } else {
-      i = i;
+    if (prospects[i].time < todaysDate - 86400 * days) {
+      document.getElementById("prospect" + i).style.display = "none";
     }
-  } //loop
-}; //function
+  }
+};
+
+const resetHidden = function() {
+  let i;
+  for (i = 0; i < prospects.length; i++) {
+    if (document.getElementById("prospect" + i).classList.contains("hidden")) {
+      i = i;
+    } else if (
+      document.getElementById("prospect" + i).classList.contains("visible")
+    ) {
+      document.getElementById("prospect" + i).classList.remove("visible");
+    } else {
+      document.getElementById("prospect" + i).style.display = "block";
+    }
+  }
+};
+
+const showHidden = function() {
+  let i;
+  for (i = 0; i < prospects.length; i++) {
+    if (document.getElementById("prospect" + i).classList.contains("hidden")) {
+      document.getElementById("prospect" + i).classList.add("visible");
+    } else {
+      document.getElementById("prospect" + i).style.display = "none";
+    }
+  }
+};
+sortMenu = function() {
+  let sortBy = document.getElementById("sortMenu").value;
+  resetHidden();
+  if (sortBy == "Last Week") {
+    dateFilter(7);
+  } else if (sortBy == "Last 2 Weeks") {
+    dateFilter(14);
+  } else if (sortBy == "Last Month") {
+    dateFilter(31);
+  } else {
+    return;
+  }
+};
+
+document.getElementById("sortMenu").onchange = function() {
+  sortMenu();
+};
+
+const prospectNameSearch = function(nameInput) {
+  let i;
+  for (i = 0; i < prospects.length; i++) {
+    prospect = document.getElementById("prospect" + i);
+    prospectName = prospects[i].name.toLowerCase();
+    if (prospectName.includes(nameInput.toLowerCase())) {
+      i = i;
+    } else {
+      prospect.style.display = "none";
+    }
+  }
+};
+
+const prospectNumberSearch = function(numInput) {
+  let i;
+  for (i = 0; i < prospects.length; i++) {
+    prospect = document.getElementById("prospect" + i);
+    prospectNumber = prospects[i].number;
+    inputLength = numInput.length;
+    if (prospectNumber.slice(0, numInput.length).includes(numInput)) {
+      i = i;
+    } else {
+      prospect.style.display = "none";
+    }
+  }
+};
+
+document.getElementById("searchBar").onkeyup = function() {
+  x = Number(this.value);
+  if (isNaN(x)) {
+    resetHidden();
+    prospectNameSearch(this.value);
+  } else {
+    resetHidden();
+    prospectNumberSearch(this.value);
+  }
+};

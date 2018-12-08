@@ -1,9 +1,16 @@
 .head {
   width: 100%;
-  height: fit-content;
-  background-color: grey;
+  background-color: rgb(163, 12, 12);
   font-family: "dosis";
   font-size: 2rem;
+  border-radius: 1%;
+}
+.searchBar{
+    width=200px;
+    height=30px;
+}
+.filters {
+  margin-left: 10px;
 }
 
 .root {
@@ -11,10 +18,15 @@
   font-family: "dosis";
   font-size: 1rem;
   border-color: black;
+  margin-bottom: 20px;
 }
 
 .hidden {
   display: none;
+}
+
+.visible{
+    display:block !important;
 }
 
 .removeButton {
@@ -22,4 +34,21 @@
   align-content: center;
   border-radius: 50%, 50%;
   float: left;
+}
+
+.noteButton {
+  width: 30px;
+  align-content: center;
+  border-radius: 50%, 50%;
+  margin-left: 20px;
+}
+
+.prospect {
+  margin-bottom: 10px;
+  background-color: rgb(207, 201, 201);
+}
+
+.noteBar{
+    margin-left: 10px;
+    background-color:oldlace;
 }
