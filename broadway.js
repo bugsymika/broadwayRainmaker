@@ -99,8 +99,10 @@ const addRemoval = function() {
     removeButton.addEventListener("click", function() {
       if (this.parentElement.classList.contains("hidden")) {
         this.parentElement.classList.remove("hidden");
+        this.parentElement.style.display = "none";
       } else {
         this.parentElement.classList.add("hidden");
+        this.parentElement.style.display = "none";
       }
     });
   }
@@ -113,8 +115,13 @@ const dateFilter = function(days) {
   todaysDate = todaysDate / 1000;
   let i;
   for (i = 0; i < prospects.length; i++) {
-    if (prospects[i].time < todaysDate - 86400 * days) {
+    if (
+      prospects[i].time < todaysDate - 86400 * days ||
+      document.getElementById("prospect" + i).classList.contains("hidden")
+    ) {
       document.getElementById("prospect" + i).style.display = "none";
+    } else {
+      document.getElementById("prospect" + i).classList.add("visible");
     }
   }
 };
@@ -123,22 +130,31 @@ const resetHidden = function() {
   let i;
   for (i = 0; i < prospects.length; i++) {
     if (document.getElementById("prospect" + i).classList.contains("hidden")) {
-      i = i;
+      document.getElementById("prospect" + i).style.display = "none";
     } else if (
       document.getElementById("prospect" + i).classList.contains("visible")
     ) {
       document.getElementById("prospect" + i).classList.remove("visible");
+      document.getElementById("prospect" + i).style.display = "block";
     } else {
       document.getElementById("prospect" + i).style.display = "block";
     }
   }
 };
-
+const showAll = function() {
+  let i;
+  for (i = 0; i < prospects.length; i++) {
+    document.getElementById("prospect" + i).classList.add("visible");
+  }
+};
+window.onload = function() {
+  showAll();
+};
 const showHidden = function() {
   let i;
   for (i = 0; i < prospects.length; i++) {
     if (document.getElementById("prospect" + i).classList.contains("hidden")) {
-      document.getElementById("prospect" + i).classList.add("visible");
+      document.getElementById("prospect" + i).style.display = "block";
     } else {
       document.getElementById("prospect" + i).style.display = "none";
     }
@@ -154,12 +170,17 @@ sortMenu = function() {
   } else if (sortBy == "Last Month") {
     dateFilter(31);
   } else {
-    return;
+    showAll();
   }
 };
 
 document.getElementById("sortMenu").onchange = function() {
-  sortMenu();
+  let sortBy = document.getElementById("sortMenu").value;
+  if (sortBy == "Hidden") {
+    showHidden();
+  } else {
+    sortMenu();
+  }
 };
 
 const prospectNameSearch = function(nameInput) {
@@ -167,8 +188,11 @@ const prospectNameSearch = function(nameInput) {
   for (i = 0; i < prospects.length; i++) {
     prospect = document.getElementById("prospect" + i);
     prospectName = prospects[i].name.toLowerCase();
-    if (prospectName.includes(nameInput.toLowerCase())) {
-      i = i;
+    if (
+      prospectName.includes(nameInput.toLowerCase()) &&
+      prospect.classList.contains("visible")
+    ) {
+      prospect.style.display = "block";
     } else {
       prospect.style.display = "none";
     }
@@ -181,8 +205,11 @@ const prospectNumberSearch = function(numInput) {
     prospect = document.getElementById("prospect" + i);
     prospectNumber = prospects[i].number;
     inputLength = numInput.length;
-    if (prospectNumber.slice(0, numInput.length).includes(numInput)) {
-      i = i;
+    if (
+      prospectNumber.slice(0, numInput.length).includes(numInput) &&
+      prospect.classList.contains("visible")
+    ) {
+      prospect.style.display = "block";
     } else {
       prospect.style.display = "none";
     }
@@ -192,10 +219,10 @@ const prospectNumberSearch = function(numInput) {
 document.getElementById("searchBar").onkeyup = function() {
   x = Number(this.value);
   if (isNaN(x)) {
-    resetHidden();
+    // resetHidden();
     prospectNameSearch(this.value);
   } else {
-    resetHidden();
+    // resetHidden();
     prospectNumberSearch(this.value);
   }
 };
