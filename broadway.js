@@ -1,5 +1,8 @@
 let prospects = [];
 let time = [];
+let prospectTotal = prompt("How Many Prospects? Enter numbers only");
+generateProspects(prospectTotal);
+let prospectList = consolidate();
 const dateFormula = function(y) {
   let month = y.slice(0, 2);
   let day = Number(y.slice(2, 4));
@@ -88,9 +91,9 @@ const addNotesBar = function() {
     noteBar.className = "noteBar";
     prospects.appendChild(noteBar);
   }
+  addButtons("noteButton", "+");
 };
 addNotesBar();
-addButtons("noteButton", "+");
 
 const addRemoval = function() {
   let i;
@@ -226,3 +229,27 @@ document.getElementById("searchBar").onkeyup = function() {
     prospectNumberSearch(this.value);
   }
 };
+
+const addNote = function() {
+  let i;
+  for (i = 0; i < prospects.length; i++) {
+    const noteButton = document.getElementById("noteButton" + i);
+    let parentNode = document.getElementById("prospectNote" + i);
+    noteButton.addEventListener("click", function() {
+      const buttonMake = document.createElement("button");
+      let noteNode = document.createTextNode(parentNode.value);
+      let noteDiv = document.createElement("div");
+      noteDiv.classList.add("note");
+      buttonMake.classList.add("removeNoteButton");
+      buttonMake.innerText = "x";
+      buttonMake.addEventListener("click", function() {
+        this.parentElement.parentElement.removeChild(this.parentElement);
+      });
+      noteDiv.appendChild(buttonMake);
+      this.parentElement.appendChild(noteDiv).appendChild(noteNode);
+      parentNode.value = "";
+    });
+  }
+};
+
+addNote();

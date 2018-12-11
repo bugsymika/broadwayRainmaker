@@ -5,10 +5,7 @@
   font-size: 2rem;
   border-radius: 1%;
 }
-.searchBar{
-    width=200px;
-    height=30px;
-}
+
 .filters {
   margin-left: 10px;
 }
@@ -19,14 +16,6 @@
   font-size: 1rem;
   border-color: black;
   margin-bottom: 20px;
-}
-
-.hidden {
-  
-}
-
-.visible{
- 
 }
 
 .removeButton {
@@ -48,7 +37,11 @@
   background-color: rgb(207, 201, 201);
 }
 
-.noteBar{
-    margin-left: 10px;
-    background-color:oldlace;
+.noteBar {
+  margin-left: 10px;
+  background-color: oldlace;
+}
+
+.note {
+  margin-left: 5%;
 }
